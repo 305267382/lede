@@ -91,7 +91,6 @@ jobs:
           CONFIG_IMAGEOPT=y
           CONFIG_KERNEL_BUILD_DOMAIN="buildhost"
           CONFIG_KERNEL_BUILD_USER="builder"
-#           CONFIG_KERNEL_KALLSYMS is not set
           CONFIG_PACKAGE_cgi-io=y
           CONFIG_PACKAGE_libiwinfo=y
           CONFIG_PACKAGE_libiwinfo-lua=y
@@ -134,7 +133,6 @@ jobs:
           CONFIG_VERSION_PRODUCT=""
           CONFIG_VERSION_REPO="http://downloads.openwrt.org/releases/19.07.2"
           CONFIG_VERSION_SUPPORT_URL=""
-         #CONFIG_COLLECT_KERNEL_DEBUG is not set
           EOF
           # 
           # ========================固件定制部分结束========================
