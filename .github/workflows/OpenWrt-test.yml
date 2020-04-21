@@ -16,7 +16,6 @@ on:
     schedule:
       - cron: 0 20 * * *
 
-
 jobs:
 
   build_openwrt:
@@ -46,8 +45,7 @@ jobs:
         run: |
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-
-      - name: Costom configure file
+      - name: Generate configuration file
         run: |
           rm -f ./.config*
           touch ./.config
@@ -65,7 +63,7 @@ jobs:
           #          =========================================
           #         |  # 取消编译VMware镜像:                   |
           #         |  cat >> .config <<EOF                   |
-          #         |  # CONFIG_VMDK_IMAGES is not set        |
+          #         |  CONFIG_VMDK_IMAGES is not set        |
           #         |  EOF                                    |
           #          =========================================
           #
@@ -136,6 +134,11 @@ jobs:
           CONFIG_VERSION_REPO="http://downloads.openwrt.org/releases/19.07.2"
           CONFIG_VERSION_SUPPORT_URL=""
           EOF
+          # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
+          # cat >> .config <<EOF
+          # CONFIG_TARGET_IMAGES_PAD is not set
+          # CONFIG_VMDK_IMAGES is not set
+          # EOF
           # 
           # ========================固件定制部分结束========================
           # 
@@ -177,3 +180,12 @@ jobs:
           draft: false
           prerelease: false      
 
+      - name: Upload release asset
+        if: github.event == 'push'
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/targets/*/*/
