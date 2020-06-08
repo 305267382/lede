@@ -16,6 +16,11 @@ on:
     schedule:
       - cron: 0 20 * * *
 
+env:
+  UPLOAD_FIRMWARE: true
+  UPLOAD_COWTRANSFER: true
+  UPLOAD_WETRANSFER: true
+
 jobs:
 
   build_openwrt:
@@ -31,9 +36,6 @@ jobs:
 
       - name: Space cleanup
         env:
-          UPLOAD_FIRMWARE: true
-          UPLOAD_COWTRANSFER: true
-          UPLOAD_WETRANSFER: true
           DEBIAN_FRONTEND: noninteractive
         run: |
           docker rmi `docker images -q`
