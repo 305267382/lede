@@ -339,6 +339,12 @@ else
     $(SCRIPT_DIR)/rstrip.sh
 endif
 
+ifeq ($(CONFIG_IPV6),y)
+  DISABLE_IPV6:=
+else
+  DISABLE_IPV6:=--disable-ipv6
+endif
+
 TAR_OPTIONS:=-xf -
 
 ifeq ($(CONFIG_BUILD_LOG),y)
